@@ -1,0 +1,168 @@
+﻿<Window x:Class="AttendanceApp.HomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AttendanceApp"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Height="600" Width="1080" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="70"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="70"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+
+    <Grid Background="#FFDEDEDE">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid x:Name="GridMain" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFFFFF"/>
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Height="60" VerticalAlignment="Top" Background="#03A9F4">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>
+            </Grid.Effect>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Foreground="White" x:Name="CurentUserName" Text="Teacher Name" VerticalAlignment="Center" FontSize="16"/>
+                <materialDesign:PopupBox  Foreground="White" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10">
+
+                    <StackPanel Width="150">
+                        <Button x:Name="ConfigureBtn" Click="ConfigureBtn_OnClick">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="AccountSettings" Margin="5,0,10,0" VerticalAlignment="Center" />
+                                <TextBlock Text="Configure" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Separator/>
+                        <Button x:Name="LogoutBtn" Click="LogoutBtn_OnClick">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Logout" Margin="5,0,10,0" VerticalAlignment="Center" />
+                                <TextBlock Text="Logout" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                </materialDesign:PopupBox>
+            </StackPanel>
+            <TextBlock Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Attendance App</TextBlock>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="GridMenu" Width="70" HorizontalAlignment="Left" Background="#1976D2">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="2" ShadowDepth="1" Color="#FFAEAEAE"/>
+            </Grid.Effect>
+            <StackPanel>
+                <Grid Height="60" Background="White" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+                    <Button x:Name="ButtonOpenMenu" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#607D8B" Click="ButtonOpenMenu_Click">
+                        <materialDesign:PackIcon Kind="Menu" Width="25" Height="25"/>
+                    </Button>
+                    <Button x:Name="ButtonCloseMenu" Visibility="Collapsed" Height="60" Width="60" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF31577E" Click="ButtonCloseMenu_Click">
+                        <materialDesign:PackIcon Kind="ArrowLeft" Width="25" Height="25"/>
+                    </Button>
+
+                    <Image Height="80" VerticalAlignment="Bottom"/>
+                </Grid>
+                <ListView Foreground="#BBDEFB" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewMenu_SelectionChanged">
+                    <ListViewItem x:Name="ItemCheckIn" Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountPlus"  Height="25" Width="25" Margin="10"/>
+                            <TextBlock Text="Check In" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="ItemCurrentAttendance" Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountMultiple" Height="25" Width="25" Margin="10"/>
+                            <TextBlock Text="Current Students" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="ItemAttendanceList" Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FormatListNumbers" Height="25" Width="25" Margin="10"/>
+                            <TextBlock Text="Month Attendance" VerticalAlignment="Center"  Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </StackPanel>
+        </Grid>
+
+        <!-- <materialDesign:DialogHost Identifier="ConfirmPasswordDialog" Grid.Row="1" Grid.Column="1" CloseOnClickAway="True"> -->
+        <!--     <materialDesign:DialogHost.DialogContent> -->
+        <!--         <Grid Margin="20" MinWidth="200" MinHeight="200" > -->
+        <!--             <Grid.ColumnDefinitions> -->
+        <!--                 <ColumnDefinition Width="100*"/> -->
+        <!--             </Grid.ColumnDefinitions> -->
+        <!--             <Grid.RowDefinitions> -->
+        <!--                 <RowDefinition Height="30*"/> -->
+        <!--                 <RowDefinition Height="40*"/> -->
+        <!--                 <RowDefinition Height="30*"/> -->
+        <!--             </Grid.RowDefinitions> -->
+        <!--             <TextBlock Grid.Column="0" Grid.Row="0" Text="Confirm your password to continue to Attendance" /> -->
+        <!--             <PasswordBox Grid.Column="0" Grid.Row="1" x:Name="PasswordField" Margin="0,10" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontFamily="Champagne &amp; Limousines" FontSize="16"/> -->
+        <!--             <Button Grid.Column="0" Grid.Row="2" Content="Confirm"/> -->
+        <!--         </Grid> -->
+        <!--     </materialDesign:DialogHost.DialogContent> -->
+        <!-- -->
+        <!--     <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Show Dialog" -->
+        <!--             HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,0"/> -->
+        <!-- </materialDesign:DialogHost> -->
+
+
+
+        <!-- <materialDesign:DialogHost Grid.Row="1" Grid.Column="1" CloseOnClickAway="True"> -->
+        <!--     <materialDesign:DialogHost.DialogContent> -->
+        <!--         <Grid Margin="20" MinWidth="200" MinHeight="200" > -->
+        <!--             <Grid.ColumnDefinitions> -->
+        <!--                 <ColumnDefinition Width="50*"/> -->
+        <!--                 <ColumnDefinition Width="50*"/> -->
+        <!--             </Grid.ColumnDefinitions> -->
+        <!--             <Grid.RowDefinitions> -->
+        <!--                 <RowDefinition Height="30*"/> -->
+        <!--                 <RowDefinition Height="40*"/> -->
+        <!--                 <RowDefinition Height="30*"/> -->
+        <!--             </Grid.RowDefinitions> -->
+        <!--             <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="Are You sure you wish you exit? (Logging out)" /> -->
+        <!--             <Button Grid.Column="0" Grid.Row="2" Margin="15" Content="No"/> -->
+        <!--             <Button Grid.Column="1" Grid.Row="2" Margin="15" Content="Yes"/> -->
+        <!--         </Grid> -->
+        <!--     </materialDesign:DialogHost.DialogContent> -->
+        <!-- -->
+        <!--     <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Show Dialog" -->
+        <!--             HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,150,0,0"/> -->
+        <!-- </materialDesign:DialogHost> -->
+    </Grid>
+
+
+</Window>
