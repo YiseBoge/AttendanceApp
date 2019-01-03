@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using AttendanceApp.DataManagement;
 using AttendanceApp.Entities;
 
 
@@ -10,38 +11,53 @@ namespace AttendanceApp
     /// </summary>
     public partial class LoginWindow : Window
     {
-        List<User> CurentUsersList = new List<User>();
+        private DatabaseManager DatabaseManager { get; set; }
+        private List<User> AllUsers { get; set; }
+        private User LoggingInUser { get; set; }
 
         private string CurrentUsername = "abebe";
         private string CurrentUserEmail = "abebe@abebe.com";
         private string CurrentPassword = "password";
         public LoginWindow()
         {
+            DatabaseManager = new DatabaseManager();
+            AllUsers = DatabaseManager.GetAllUsers();
+
             InitializeComponent();
         }
 
         private void LoginBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            if (checkCredentials())
+            if (CheckCredentials())
             {
-                new HomeWindow(CurrentUsername).Show();
+                if (LoggingInUser is Teacher)
+                {
+                    new HomeWindow((Teacher)LoggingInUser).Show();
+                }
+                
                 Close();
             }
 
         }
 
-        private bool checkCredentials()
+        private bool CheckCredentials()
         {
-            if (EmailField.Text.Trim() == CurrentUserEmail)
+            string givenEmail = EmailField.Text.Trim();
+            string givenPassword = PasswordField.Password.Trim();
+            foreach (User user in AllUsers)
             {
-                if (PasswordField.Password.Trim() == CurrentPassword)
+                if (user.CheckEmail(givenEmail))
                 {
-                    return true;
+                    if (user.CheckPassword(givenPassword))
+                    {
+                        LoggingInUser = user;
+                        return true;
+                    }
+                        
                 }
-
-                return false;
             }
             return false;
         }
+
     }
 }

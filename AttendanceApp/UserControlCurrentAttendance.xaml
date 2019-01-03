@@ -22,7 +22,7 @@
         <DataGrid AlternatingRowBackground="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Student ID" Width="*"/>
-                <DataGridTextColumn Header="Student Name" Width="*"/>
+                <DataGridTextColumn Header="Student CourseName" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

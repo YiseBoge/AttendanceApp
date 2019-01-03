@@ -18,16 +18,16 @@
         </Grid.RowDefinitions>
 
 
-        <TextBox x:Name="EditNameField" Grid.Row="0" Grid.Column="0" Margin="80,20" materialDesign:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontFamily="Champagne &amp; Limousines" FontSize="15"/>
+        <TextBox x:Name="EditNameField" Grid.Row="0" Grid.Column="0" Margin="80,20" materialDesign:HintAssist.Hint="CourseName" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontFamily="Champagne &amp; Limousines" FontSize="15"/>
         <TextBox x:Name="EditEmailField" Grid.Row="0" Grid.Column="1" Margin="80,20" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontFamily="Champagne &amp; Limousines" FontSize="15"/>
 
         <ComboBox x:Name="EditCourseField" Grid.Row="1" Grid.Column="0" Margin="80,20" materialDesign:HintAssist.Hint="Course" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontSize="13">
             <ComboBoxItem>None</ComboBoxItem>
-            <ComboBoxItem>Course Name 1, DepartmentName, Year 1, Section 1, Semester 1</ComboBoxItem>
-            <ComboBoxItem>Course Name 1, DepartmentName, Year 1, Section 2, Semester 1</ComboBoxItem>
-            <ComboBoxItem>Course Name 2, DepartmentName, Year 2, Section 2, Semester 1</ComboBoxItem>
-            <ComboBoxItem>Course Name 3, DepartmentName, Year 2, Section 3, Semester 1</ComboBoxItem>
-            <ComboBoxItem>Course Name 4, DepartmentName, Year 3, Section 3, Semester 1</ComboBoxItem>
+            <ComboBoxItem>Course CourseName 1, DepartmentCourseName, Year 1, Section 1, Semester 1</ComboBoxItem>
+            <ComboBoxItem>Course CourseName 1, DepartmentCourseName, Year 1, Section 2, Semester 1</ComboBoxItem>
+            <ComboBoxItem>Course CourseName 2, DepartmentCourseName, Year 2, Section 2, Semester 1</ComboBoxItem>
+            <ComboBoxItem>Course CourseName 3, DepartmentCourseName, Year 2, Section 3, Semester 1</ComboBoxItem>
+            <ComboBoxItem>Course CourseName 4, DepartmentCourseName, Year 3, Section 3, Semester 1</ComboBoxItem>
 
         </ComboBox>
         <Button x:Name="EditAccountBtn" Grid.Row="1" Grid.Column="1" Width="120" Content="Save" Click="EditAccountBtn_Click"/>

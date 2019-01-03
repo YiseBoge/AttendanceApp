@@ -10,16 +10,16 @@ namespace AttendanceApp
     /// </summary>
     public partial class HomeWindow : Window
     {
-        private User LoggedInUser { get; set; }
+        private Teacher TheTeacher { get; set; }
 
-        private String _currentUser = "";
-
-        public HomeWindow(string currentUsername)
+        public HomeWindow(Teacher loggedInTeacher)
         {
-            _currentUser = currentUsername;
+            TheTeacher = loggedInTeacher;
+
             InitializeComponent();
 
-            CurentUserName.Text = string.Format($"Welcome, {currentUsername}");
+            CurentUserName.Text = string.Format($"Welcome, {TheTeacher.Name}");
+
             GridMain.Children.Add(new UserControlAttendanceList());
 
         }
@@ -71,7 +71,7 @@ namespace AttendanceApp
 
         private void LogoutBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            _currentUser = null;
+            TheTeacher = null;
             new LoginWindow().Show();
             Close();
 

@@ -49,7 +49,7 @@
                 <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>
             </Grid.Effect>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Foreground="White" x:Name="CurentUserName" Text="Teacher Name" VerticalAlignment="Center" FontSize="16"/>
+                <TextBlock Foreground="White" x:Name="CurentUserName" Text="Teacher CourseName" VerticalAlignment="Center" FontSize="16"/>
                 <materialDesign:PopupBox  Foreground="White" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10">
 
                     <StackPanel Width="150">
@@ -95,7 +95,7 @@
 
                     <Image Height="80" VerticalAlignment="Bottom"/>
                 </Grid>
-                <ListView Foreground="#BBDEFB" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewMenu_SelectionChanged">
+                <ListView x:Name="MenuList" Foreground="#BBDEFB" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewMenu_SelectionChanged">
                     <ListViewItem x:Name="ItemCheckIn" Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="AccountPlus"  Height="25" Width="25" Margin="10"/>

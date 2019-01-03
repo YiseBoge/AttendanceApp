@@ -1,39 +1,109 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AttendanceApp.DataManagement;
 
 namespace AttendanceApp.Entities
 {
-    class Teacher : User
+    public class Teacher : User
     {
+        private DatabaseManager DatabaseManager { get; set; }
 
         public Class UserClass { get; set; }
         public Course UserCourse { get; set; }
+        public List<ClassCourse> ClassCourses { get; set; }
 
-        public Teacher(int userId, string email, string password, Class userClass, Course userCourse) : base(userId, email, password)
+        public Teacher(int userId, string name, string email, string password, List<ClassCourse> classCourses) : base(userId, name, email, password)
         {
-            this.UserClass = userClass;
-            this.UserCourse = userCourse;
+            this.ClassCourses = classCourses;
         }
 
-        public Teacher(int userId, string email, string password) : base(userId, email, password)
+        public string MarkStudent(string studentId, string password, List<Student> allStudents, List<Student> todayStudents)
         {
-            this.UserClass = null;
-            this.UserCourse = null;
+            foreach (Student student in allStudents)
+            {
+                if (student.StudentId.Equals(studentId))
+                {
+                    if (student.Password.Equals(password))
+                    {
+                        if (todayStudents.Contains(student))
+                        {
+                            return "alreadyexisting";
+                        }
+                        else
+                        {
+                            todayStudents.Add(student);
+                            return "success";
+                        }
+                    }
+
+                    return "passwordmissmatch";
+                }
+                
+                
+               
+            }
+
+            return "notfound";
         }
 
-        public void MarkStudent(string userId, string password)
+        public string MarkStudent(string studentId, List<Student> allStudents, List<Student> todayStudents)
         {
+            foreach (Student student in allStudents)
+            {
+                if (student.StudentId.Equals(studentId))
+                {
+                    
+                        if (todayStudents.Contains(student))
+                        {
+                            return "alreadyexisting";
+                        }
+                        else
+                        {
+                            todayStudents.Add(student);
+                            return "success";
+                        }
+                   
+                }
+
+
+
+            }
+
+            return "notfound";
+        }
+
+
+        public bool SaveTodayAttendance(List<Student> todayStudents, ClassCourse classCourse)
+        {
+            bool result = false;
+            foreach (Student student in todayStudents)
+            {
+
+                result = DatabaseManager.SaveStudentAttendance(student.StudentId, classCourse.ClassCourseId);
+
+            }
+
+            if (result)
+            {
+                return true;
+            }
+
+            return false;
 
         }
 
-        public List<Student> getAttendingStudents()
+
+        public List<Student> GetTodayStudents()
         {
             return new List<Student>();
         }
 
-//        public List<Attendance> getAttendanceList()
-//        {
-//            return new List<Attendance>();
-//        }
+        //        public List<Attendance> getAttendanceList()
+        //        {
+        //            return new List<Attendance>();
+        //        }
     }
 }
-  

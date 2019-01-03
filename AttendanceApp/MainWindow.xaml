@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="600">
     <Grid>
-        
+        <TextBlock x:Name="TestTextBlock" Foreground="Red" Text="The text" Margin="10,450,415.333,99.667"/>
+        <Image x:Name="frameHolder" HorizontalAlignment="Left" Height="435" Margin="10,10,0,0" VerticalAlignment="Top" Width="573"/>
+        <Button x:Name="TheButton"  Margin="467,450,10.333,88.667" Content="The Button" Click="TheButton_Click"/>
+
+        <ComboBox x:Name="ComboBox" Margin="277,454,131.333,88.667">
+            
+        </ComboBox>
+
     </Grid>
 </Window>

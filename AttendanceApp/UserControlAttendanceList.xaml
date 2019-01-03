@@ -16,7 +16,7 @@
         <DataGrid AlternatingRowBackground="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Student ID" Width="Auto"/>
-                <DataGridTextColumn Header="Student Name" Width="Auto"/>
+                <DataGridTextColumn Header="Student CourseName" Width="Auto"/>
                 <DataGridTextColumn Header="Day 1" Width="Auto"/>
                 <DataGridTextColumn Header="Day 2" Width="Auto"/>
                 <DataGridTextColumn Header="Day 3" Width="Auto"/>

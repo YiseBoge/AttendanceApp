@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AttendanceApp.Entities
 {
-    class Student
+    public class Student
     {
         public string StudentId { get; set; }
         public string Name { get; set; }
