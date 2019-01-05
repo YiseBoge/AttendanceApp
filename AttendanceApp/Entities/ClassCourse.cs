@@ -22,9 +22,8 @@ namespace AttendanceApp.Entities
 
         public override string ToString()
         {
-
-            string returnable = string.Format($"{Course.CourseName}, Year {Class.Year}, Semester {Class.Semester}, {Class.Department}, Section {Class.Section}");
-            return base.ToString();
+            string returnable = string.Format($"{Course.ToString()}, {Class.ToString()}");
+            return returnable;
         }
     }
 
@@ -40,9 +39,18 @@ namespace AttendanceApp.Entities
 
         public Class(int classId, int year, int semester, string department, int section)
         {
-            ClassId = classId;
+            this.ClassId = classId;
+            this.Year = year;
+            this.Semester = semester;
+            this.Department = department;
+            this.Section = section;
         }
 
+        public override string ToString()
+        {
+            string returnable = string.Format($"Year {this.Year}, Semester {this.Semester}, {this.Department}, Section {this.Section}");
+            return returnable;
+        }
     }
 
     public class Course

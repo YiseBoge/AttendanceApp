@@ -30,11 +30,11 @@
         <Grid VerticalAlignment="Bottom" Margin="85,100" Height="240">
             <Label Content="Login" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Foreground="Gray" FontSize="18"/>
             <StackPanel VerticalAlignment="Center" Margin="15">
-                <TextBox x:Name="EmailField" Margin="0,10" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="16"/>
-                <PasswordBox x:Name="PasswordField" Margin="0,10" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontFamily="Champagne &amp; Limousines" FontSize="16"/>
+                <TextBox x:Name="EmailField" Margin="0,10" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="16" KeyDown="EmailField_OnKeyDown"/>
+                <PasswordBox x:Name="PasswordField" Margin="0,10" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontFamily="Champagne &amp; Limousines" FontSize="16" KeyDown="PasswordField_OnKeyDown"/>
             </StackPanel>
         </Grid>
-        <Button x:Name="LoginBtn" Width="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,85" Content="Login" Click="LoginBtn_OnClick"/>
+        <Button x:Name="LoginBtn" Width="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,85" Content="Login" Click="LoginBtn_OnClick" KeyDown="LoginBtn_OnKeyDown"/>
         <TextBlock Text="Create Account Instead?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50" Foreground="Gray" Cursor="Hand"/>
         <Image Source="Assets/home.png" Width="100" Height="100" VerticalAlignment="Top" Margin="50"/>
         <TextBlock Text="Welcome Teacher" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="150" Foreground="White" FontSize="23"/>

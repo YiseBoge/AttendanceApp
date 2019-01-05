@@ -1,4 +1,6 @@
-﻿namespace AttendanceApp.Entities
+﻿using System;
+
+namespace AttendanceApp.Entities
 {
     public abstract class User
     {
@@ -7,8 +9,8 @@
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        
-        public User(int userId, string name, string email, string password)
+
+        protected User(int userId, string name, string email, string password)
         {
             this.UserId = userId;
             this.Name = name;
@@ -18,7 +20,7 @@
 
         public bool CheckEmail(string email)
         {
-            if (this.Email.Equals(email))
+            if (this.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase))
             {
                 return true;
             }

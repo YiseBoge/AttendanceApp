@@ -48,7 +48,7 @@ namespace AttendanceApp.DataManagement
                 TheConnection.Open();
                 if (TheConnection.State == ConnectionState.Open)
                 {
-                    WriteLine("It is Connected Now");
+                    WriteLine(@"It is Connected Now");
                 }
             }
             catch (Exception e)
@@ -61,12 +61,12 @@ namespace AttendanceApp.DataManagement
 
 
 
-        public User GetUser(int id)
+        public User GetUser(int id, List<ClassCourse> retrievedClassCourse)
         {
 
             List<User> usersList = new List<User>();
             MySqlCommand theCommand = TheConnection.CreateCommand();
-            string commandText = "select * from users where id=@id";
+            string commandText = "select * from users where user_id=@id";
 
 
             theCommand.CommandText = commandText;
@@ -93,7 +93,7 @@ namespace AttendanceApp.DataManagement
                 }
                 else
                 {
-                    user = new Teacher(userId, name, email, password, GetClassCoursesForUser(userId));
+                    user = new Teacher(userId, name, email, password, retrievedClassCourse);
                 }
 
 
@@ -107,54 +107,58 @@ namespace AttendanceApp.DataManagement
         public List<User> GetAllUsers()
         {
             List<User> usersList = new List<User>();
+
+            #region Getting List of  User Ids
+
+            List<int> userIdList = new List<int>();
             MySqlCommand theCommand = TheConnection.CreateCommand();
-            string commandText = "select * from users";
+            string commandText = "select user_id from users";
 
 
             theCommand.CommandText = commandText;
 
             TheConnection.Open();
-            
+
 
             MySqlDataReader reader = theCommand.ExecuteReader();
 
             while (reader.Read())
             {
                 int userId = (int)reader["user_id"];
-                string name = (string) reader["name"];
-                string email = (string)reader["email"];
-                string password = (string)reader["password"];
-                string role = (string)reader["role"];
 
-
-                User user;
-                if (role.ToUpper().Equals("ADMIN"))
-                {
-                    user = new Admin(userId, name, email, password);
-                }
-                else
-                {
-                    user = new Teacher(userId, name, email, password, GetClassCoursesForUser(userId));
-                }
-
-
-                usersList.Add(user);
+                userIdList.Add(userId);
             }
 
-           
             TheConnection.Close();
-            foreach (var VARIABLE in COLLECTION)
+
+            #endregion
+
+
+
+
+            #region Generating User from UserId List
+
+            foreach (int userId in userIdList)
             {
-                
+                usersList.Add(GetUser(userId,GetClassCoursesForUser(userId)));
             }
+            
+            #endregion
+
             return usersList;
         }
 
             public List<ClassCourse> GetClassCoursesForUser(int theTeacherId)
         {
             List<ClassCourse> classCoursesList = new List<ClassCourse>();
+
+
+            #region GetFromClassCourseTable
+
+            List<int[]> classCourseItemsList = new List<int[]>();
+
             MySqlCommand theCommand = TheConnection.CreateCommand();
-            string commandText = "select * from class_courses where teacher_id=@teacherId";
+            string commandText = "SELECT * FROM class_courses where teacher_id = @teacherId";
 
             theCommand.CommandText = commandText;
             theCommand.Parameters.AddWithValue("teacherId", theTeacherId);
@@ -167,14 +171,27 @@ namespace AttendanceApp.DataManagement
             {
                 int classCourseId = (int)reader["class_course_id"];
                 int classId = (int)reader["class_id"];
-                int courseId = (int)reader["coiurse_id"];
+                int courseId = (int)reader["course_id"];
 
-                ClassCourse theClassCourse = new ClassCourse(classCourseId, GetClass(classId),GetCourse(courseId));
+                classCourseItemsList.Add(new []{classCourseId, classId, courseId});
                 
-                classCoursesList.Add(theClassCourse);
             }
 
             TheConnection.Close();
+
+            #endregion
+
+
+
+            #region GetingClassAndCourseForClassCourse
+
+            foreach (int[] classCourseItem in classCourseItemsList)
+            {
+                classCoursesList.Add(new ClassCourse(classCourseItem[0], GetClass(classCourseItem[1]), GetCourse(classCourseItem[2])));
+            }
+
+            #endregion
+
             return classCoursesList;
         }
         
@@ -182,7 +199,7 @@ namespace AttendanceApp.DataManagement
                 {
                     List<Class> usersList = new List<Class>();
                     MySqlCommand theCommand = TheConnection.CreateCommand();
-                    string commandText = "select * from classes where class_id=@id";
+                    string commandText = "select * from classes where class_id=@class_id";
 
                     theCommand.CommandText = commandText;
                     theCommand.Parameters.AddWithValue("class_id", id);
@@ -214,7 +231,7 @@ namespace AttendanceApp.DataManagement
                 {
                     List<Course> usersList = new List<Course>();
                     MySqlCommand theCommand = TheConnection.CreateCommand();
-                    string commandText = "select * from classes where course_id=@id";
+                    string commandText = "select * from courses where course_id=@course_id";
 
                     theCommand.CommandText = commandText;
                     theCommand.Parameters.AddWithValue("course_id", id);
@@ -240,7 +257,41 @@ namespace AttendanceApp.DataManagement
 
 
 
-        
+        public List<Student> GetAllStudentsInClass(Class theClass)
+        {
+
+            WriteLine("the input class is ");
+
+            List<Student> studentsInClass = new List<Student>();
+
+
+            MySqlCommand theCommand = TheConnection.CreateCommand();
+            string commandText = "SELECT * FROM students where class_id = @classId";
+
+            theCommand.CommandText = commandText;
+            theCommand.Parameters.AddWithValue("classId", theClass.ClassId);
+
+            TheConnection.Open();
+
+            MySqlDataReader reader = theCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                string studentId = (string)reader["student_id"];
+                string name = (string)reader["name"];
+                string password = (string)reader["password"];
+
+                studentsInClass.Add(new Student(studentId, name, password, theClass));
+
+            }
+
+            TheConnection.Close();
+
+           
+            return studentsInClass;
+        }
+
+
         public bool SaveStudentAttendance(string studentId, int classCourseId)
         {
             MySqlCommand theCommand = TheConnection.CreateCommand();

@@ -19,14 +19,14 @@
         </Grid.RowDefinitions>
 
 
-        <DataGrid AlternatingRowBackground="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+        <DataGrid x:Name="StudentsListTable" AlternatingRowBackground="#EEEEEE" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Student ID" Width="*"/>
-                <DataGridTextColumn Header="Student CourseName" Width="*"/>
+                <DataGridTextColumn Header="Student ID" Binding="{Binding Path=StudentId}" Width="*"/>
+                <DataGridTextColumn Header="Student CourseName" Binding="{Binding Path=Name}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="1" Grid.Column="1" Width="100" Content="Save" FontFamily="Champagne &amp; Limousines" FontSize="16"/>
+        <Button x:Name="SaveAttendance" Grid.Row="1" Grid.Column="1" Width="100" Content="Save" FontFamily="Champagne &amp; Limousines" FontSize="16" Click="SaveAttendance_Click"/>
 
     </Grid>
 </UserControl>

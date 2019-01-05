@@ -90,7 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataManagement\DatabaseManager-1.cs" />
+    <Compile Include="DataManagement\DatabaseManager1.cs" />
     <Compile Include="Entities\Admin.cs" />
     <Compile Include="Entities\ClassCourse.cs" />
     <Compile Include="Entities\Student.cs" />

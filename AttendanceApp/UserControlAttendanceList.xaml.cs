@@ -1,5 +1,8 @@
 ﻿
+using System.Collections.Generic;
 using System.Windows.Controls;
+using AttendanceApp.DataManagement;
+using AttendanceApp.Entities;
 
 
 namespace AttendanceApp
@@ -9,9 +12,12 @@ namespace AttendanceApp
     /// </summary>
     public partial class UserControlAttendanceList : UserControl
     {
-        public UserControlAttendanceList()
+        private List<Student> AttendingStudent { get; set; }
+
+        public UserControlAttendanceList(List<Student> attendingStudents)
         {
             InitializeComponent();
+            this.AttendingStudent = attendingStudents;
         }
     }
 }

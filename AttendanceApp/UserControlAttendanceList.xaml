@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <DataGrid AlternatingRowBackground="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+        <DataGrid AlternatingRowBackground="#EEEEEE" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Student ID" Width="Auto"/>
                 <DataGridTextColumn Header="Student CourseName" Width="Auto"/>

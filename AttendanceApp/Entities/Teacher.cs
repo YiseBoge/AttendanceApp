@@ -17,6 +17,7 @@ namespace AttendanceApp.Entities
 
         public Teacher(int userId, string name, string email, string password, List<ClassCourse> classCourses) : base(userId, name, email, password)
         {
+            DatabaseManager = new DatabaseManager();
             this.ClassCourses = classCourses;
         }
 
@@ -24,19 +25,16 @@ namespace AttendanceApp.Entities
         {
             foreach (Student student in allStudents)
             {
-                if (student.StudentId.Equals(studentId))
+                if (student.StudentId.Equals(studentId, StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (student.Password.Equals(password))
                     {
                         if (todayStudents.Contains(student))
                         {
-                            return "alreadyexisting";
+                            return "You have Already Checked In.";
                         }
-                        else
-                        {
-                            todayStudents.Add(student);
-                            return "success";
-                        }
+                        todayStudents.Add(student);
+                        return "Welcome to class, "+ student.Name;
                     }
 
                     return "passwordmissmatch";
@@ -48,33 +46,7 @@ namespace AttendanceApp.Entities
 
             return "notfound";
         }
-
-        public string MarkStudent(string studentId, List<Student> allStudents, List<Student> todayStudents)
-        {
-            foreach (Student student in allStudents)
-            {
-                if (student.StudentId.Equals(studentId))
-                {
-                    
-                        if (todayStudents.Contains(student))
-                        {
-                            return "alreadyexisting";
-                        }
-                        else
-                        {
-                            todayStudents.Add(student);
-                            return "success";
-                        }
-                   
-                }
-
-
-
-            }
-
-            return "notfound";
-        }
-
+  
 
         public bool SaveTodayAttendance(List<Student> todayStudents, ClassCourse classCourse)
         {
@@ -86,24 +58,18 @@ namespace AttendanceApp.Entities
 
             }
 
-            if (result)
-            {
-                return true;
-            }
-
-            return false;
+            todayStudents.Clear();
+            return result;
 
         }
 
 
-        public List<Student> GetTodayStudents()
+        public List<Student> GetFullClass(Class aClass)
         {
-            return new List<Student>();
+            Console.WriteLine(aClass.ClassId);
+            List<Student> list = DatabaseManager.GetAllStudentsInClass(aClass);
+            return list;
         }
 
-        //        public List<Attendance> getAttendanceList()
-        //        {
-        //            return new List<Attendance>();
-        //        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using AttendanceApp.DataManagement;
 using AttendanceApp.Entities;
+using ZXing.Datamatrix.Encoder;
 
 
 namespace AttendanceApp
@@ -15,9 +17,6 @@ namespace AttendanceApp
         private List<User> AllUsers { get; set; }
         private User LoggingInUser { get; set; }
 
-        private string CurrentUsername = "abebe";
-        private string CurrentUserEmail = "abebe@abebe.com";
-        private string CurrentPassword = "password";
         public LoginWindow()
         {
             DatabaseManager = new DatabaseManager();
@@ -53,11 +52,66 @@ namespace AttendanceApp
                         LoggingInUser = user;
                         return true;
                     }
+                    else
+                    {
+                        MessageBox.Show("Wrong Password for the specified email.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return false;
+                    }
                         
                 }
             }
+            MessageBox.Show("Email Not Found.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Information);
             return false;
         }
 
+
+        private void EmailField_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter || e.Key == Key.Down)
+            {
+                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+                UIElement keyboardFocus = Keyboard.FocusedElement as UIElement;
+
+                if (keyboardFocus != null)
+                {
+                    keyboardFocus.MoveFocus(tRequest);
+                }
+
+                e.Handled = true;
+            }
+        }
+
+        private void PasswordField_OnKeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.Key == Key.Enter)
+            {
+                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+                UIElement keyboardFocus = Keyboard.FocusedElement as UIElement;
+
+                if (keyboardFocus != null)
+                {
+                    keyboardFocus.MoveFocus(tRequest);
+                }
+
+                e.Handled = true;
+            } 
+        }
+
+        private void LoginBtn_OnKeyDown(object sender, KeyEventArgs e)
+        {
+           if (e.Key == Key.Enter)
+            {
+                if (CheckCredentials())
+                {
+                    if (LoggingInUser is Teacher)
+                    {
+                        new HomeWindow((Teacher)LoggingInUser).Show();
+                    }
+
+                    Close();
+                }
+            }
+        }
     }
 }

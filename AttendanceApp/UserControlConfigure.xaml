@@ -9,27 +9,22 @@
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
 
         <TextBox x:Name="EditNameField" Grid.Row="0" Grid.Column="0" Margin="80,20" materialDesign:HintAssist.Hint="CourseName" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontFamily="Champagne &amp; Limousines" FontSize="15"/>
         <TextBox x:Name="EditEmailField" Grid.Row="0" Grid.Column="1" Margin="80,20" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontFamily="Champagne &amp; Limousines" FontSize="15"/>
 
-        <ComboBox x:Name="EditCourseField" Grid.Row="1" Grid.Column="0" Margin="80,20" materialDesign:HintAssist.Hint="Course" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontSize="13">
-            <ComboBoxItem>None</ComboBoxItem>
-            <ComboBoxItem>Course CourseName 1, DepartmentCourseName, Year 1, Section 1, Semester 1</ComboBoxItem>
-            <ComboBoxItem>Course CourseName 1, DepartmentCourseName, Year 1, Section 2, Semester 1</ComboBoxItem>
-            <ComboBoxItem>Course CourseName 2, DepartmentCourseName, Year 2, Section 2, Semester 1</ComboBoxItem>
-            <ComboBoxItem>Course CourseName 3, DepartmentCourseName, Year 2, Section 3, Semester 1</ComboBoxItem>
-            <ComboBoxItem>Course CourseName 4, DepartmentCourseName, Year 3, Section 3, Semester 1</ComboBoxItem>
-
+        <ComboBox x:Name="EditCourseField" Grid.Row="1" Grid.Column="0" Margin="80,20" materialDesign:HintAssist.Hint="Course" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontSize="13" VerticalAlignment="Top">
+            
         </ComboBox>
-        <Button x:Name="EditAccountBtn" Grid.Row="1" Grid.Column="1" Width="120" Content="Save" Click="EditAccountBtn_Click"/>
+        <Button x:Name="SaveChangesButton" Grid.Row="1" Grid.Column="1" Width="120" Margin="80,30" Content="Apply" Click="EditAccountBtn_Click" VerticalAlignment="Top"/>
+        <TextBlock x:Name="TextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="137,190,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
