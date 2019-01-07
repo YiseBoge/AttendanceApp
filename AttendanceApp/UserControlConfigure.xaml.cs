@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using AttendanceApp.Entities;
+using AttendanceApp.TeacherViews;
 
 
 namespace AttendanceApp

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using AttendanceApp.DataManagement;
 using AttendanceApp.Entities;
+using AttendanceApp.TeacherViews;
 
 namespace AttendanceApp
 {

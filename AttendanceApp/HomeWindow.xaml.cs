@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using AttendanceApp.Entities;
 
-namespace AttendanceApp
+namespace AttendanceApp.TeacherViews
 {
     /// <summary>
     /// Interaction logic for HomeWindow.xaml
@@ -22,13 +22,13 @@ namespace AttendanceApp
         private UserControl TheCheckInUserControl { get; set; }
         private UserControl TheConfigureUserControl { get; set; }
         private UserControl TheCurrentAttendanceUserControl { get; set; }
-        private UserControl TheAttendanceListUserControl { get; set; }  
+        private UserControl TheAttendanceListUserControl { get; set; }
 
         public HomeWindow(Teacher loggedInTeacher)
         {
             InitializeComponent();
             TheTeacher = loggedInTeacher;
-            
+
             CurentUserName.Text = string.Format($"Welcome, {TheTeacher.Name}");
 
             LoadUserControl("Configure");
@@ -74,7 +74,7 @@ namespace AttendanceApp
                         break;
                 }
             }
-            
+
         }
 
         private void LoadUserControl(string which)
@@ -86,9 +86,9 @@ namespace AttendanceApp
                     ((UserControlCheckIn)TheCheckInUserControl).LocalWebCam.Stop();
 
                 }));
-                
+
             }
-            
+
             GridMain.Children.Clear();
             switch (which)
             {
@@ -129,14 +129,14 @@ namespace AttendanceApp
 
         private void ConfigureBtn_OnClick(object sender, RoutedEventArgs e)
         {
-           LoadUserControl("Configure");
-           MenuList.SelectedItem = null;
+            LoadUserControl("Configure");
+            MenuList.SelectedItem = null;
         }
 
         private void LogoutBtn_OnClick(object sender, RoutedEventArgs e)
         {
             SystemSounds.Beep.Play();
-            
+
         }
 
 
@@ -153,7 +153,7 @@ namespace AttendanceApp
         {
             Dispatcher.BeginInvoke(new ThreadStart(delegate
             {
-                ((UserControlCheckIn) TheCheckInUserControl)?.LocalWebCam.Stop();
+                ((UserControlCheckIn)TheCheckInUserControl)?.LocalWebCam.Stop();
             }));
 
         }
