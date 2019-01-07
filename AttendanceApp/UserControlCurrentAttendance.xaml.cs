@@ -35,18 +35,11 @@ namespace AttendanceApp
                 StudentsListTable.Items.Add(student);
             }
 
-            if (AttendingStudents == null)
-            {
-                SetMessageText(Colors.DodgerBlue, "No Unsaved Attendances at the moment.");
-            }
-            else
-            {
-                SetMessageText(Colors.DodgerBlue, "");
-            }
+            SetMessageText(Colors.DodgerBlue, AttendingStudents == null ? "No Unsaved Attendances at the moment." : "");
             ConfirmPasswordText.Text = "Confirm your Password to Save";
         }
 
-        private void SaveAttendance_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SaveAttendance_Click(object sender, RoutedEventArgs e)
         {
             SystemSounds.Beep.Play();
         }
