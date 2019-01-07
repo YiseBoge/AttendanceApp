@@ -13,8 +13,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
 
@@ -25,6 +26,6 @@
             
         </ComboBox>
         <Button x:Name="SaveChangesButton" Grid.Row="1" Grid.Column="1" Width="120" Margin="80,30" Content="Apply" Click="EditAccountBtn_Click" VerticalAlignment="Top"/>
-        <TextBlock x:Name="TextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="137,190,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="MessageBlock" Margin="20" FontSize="15" Foreground="#9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Grid.Row="2" Text="Current Course: Not Assigned" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

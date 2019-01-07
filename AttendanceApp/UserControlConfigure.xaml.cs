@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using AttendanceApp.Entities;
 
 
@@ -18,6 +19,7 @@ namespace AttendanceApp
             this.TheTeacher = theTeacher;
             
             SetupFields();
+            SetMessageText(Colors.OrangeRed, "Current Course: Not Assigned");
         }
 
         private void SetupFields()
@@ -33,8 +35,18 @@ namespace AttendanceApp
 
         private void EditAccountBtn_Click(object sender, RoutedEventArgs e)
         {
-            HomeWindow.CurrentClassCourse = TheTeacher.ClassCourses[EditCourseField.SelectedIndex];
-            TextBlock.Text = HomeWindow.CurrentClassCourse.ToString();
+            if (EditCourseField.SelectedIndex >= 0)
+            {
+                HomeWindow.CurrentClassCourse = TheTeacher.ClassCourses[EditCourseField.SelectedIndex];
+                SetMessageText(Colors.LimeGreen, "Current Course: " + HomeWindow.CurrentClassCourse);
+            }
+            
+        }
+
+        private void SetMessageText(Color color, string message)
+        {
+            MessageBlock.Foreground = new SolidColorBrush(color);
+            MessageBlock.Text = message;
         }
     }
 }

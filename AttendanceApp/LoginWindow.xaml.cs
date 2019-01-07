@@ -3,8 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 using AttendanceApp.DataManagement;
 using AttendanceApp.Entities;
-using ZXing.Datamatrix.Encoder;
-
 
 namespace AttendanceApp
 {
@@ -29,9 +27,9 @@ namespace AttendanceApp
         {
             if (CheckCredentials())
             {
-                if (LoggingInUser is Teacher)
+                if (LoggingInUser is Teacher teacher)
                 {
-                    new HomeWindow((Teacher)LoggingInUser).Show();
+                    new HomeWindow(teacher).Show();
                 }
                 
                 Close();
@@ -54,13 +52,13 @@ namespace AttendanceApp
                     }
                     else
                     {
-                        MessageBox.Show("Wrong Password for the specified email.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ShowPopup("Wrong Password for the specified email.");
                         return false;
                     }
                         
                 }
             }
-            MessageBox.Show("Email Not Found.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Information);
+            ShowPopup("Account not Found.");
             return false;
         }
 
@@ -70,9 +68,8 @@ namespace AttendanceApp
             if (e.Key == Key.Enter || e.Key == Key.Down)
             {
                 TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
-                UIElement keyboardFocus = Keyboard.FocusedElement as UIElement;
 
-                if (keyboardFocus != null)
+                if (Keyboard.FocusedElement is UIElement keyboardFocus)
                 {
                     keyboardFocus.MoveFocus(tRequest);
                 }
@@ -87,9 +84,8 @@ namespace AttendanceApp
             if (e.Key == Key.Enter)
             {
                 TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
-                UIElement keyboardFocus = Keyboard.FocusedElement as UIElement;
 
-                if (keyboardFocus != null)
+                if (Keyboard.FocusedElement is UIElement keyboardFocus)
                 {
                     keyboardFocus.MoveFocus(tRequest);
                 }
@@ -98,20 +94,10 @@ namespace AttendanceApp
             } 
         }
 
-        private void LoginBtn_OnKeyDown(object sender, KeyEventArgs e)
+        private void ShowPopup(string message)
         {
-           if (e.Key == Key.Enter)
-            {
-                if (CheckCredentials())
-                {
-                    if (LoggingInUser is Teacher)
-                    {
-                        new HomeWindow((Teacher)LoggingInUser).Show();
-                    }
-
-                    Close();
-                }
-            }
+            PopupMessage.Text = message;
+            LoginErrorPopup.IsOpen = true;
         }
     }
 }

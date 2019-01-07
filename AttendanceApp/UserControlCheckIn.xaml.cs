@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Media;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AForge.Video;
 using AForge.Video.DirectShow;
 using AttendanceApp.Entities;
 using AttendanceApp.Services;
+using Color = System.Windows.Media.Color;
 
 
 namespace AttendanceApp
@@ -145,13 +149,20 @@ namespace AttendanceApp
                         {
                             LocalWebCam.Stop();
 
-                            MessageBox.Show(result, "New Attendant Recognized", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            ShowPopup(result);
+                            SystemSounds.Beep.Play();
+                            SetMessageText(Colors.LimeGreen, result);
+                            return;
                         }
+                        SetMessageText(Colors.DodgerBlue, result+student.Name);
 
+                        return;
                     }
+                    SetMessageText(Colors.OrangeRed, "Incorrect Password");
                 }
 
             }
+            SetMessageText(Colors.OrangeRed, "No Student of that Id was found in this Class.");
         }
 
         private void CheckInStudent(string theString)
@@ -173,6 +184,48 @@ namespace AttendanceApp
             
         }
 
-        
+        private void ShowPopup(string message)
+        {
+            PopupMessage.Text = message;
+            StudentRecognizedPopup.IsOpen = true;
+        }
+
+        private void SetMessageText(Color color, string message)
+        {
+            MessageBlock.Foreground = new SolidColorBrush(color);
+            MessageBlock.Text = message;
+        }
+
+        private void StudentIdField_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            SetMessageText(Colors.OrangeRed, "");
+
+            if (e.Key == Key.Enter)
+            {
+                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+
+                if (Keyboard.FocusedElement is UIElement keyboardFocus)
+                {
+                    keyboardFocus.MoveFocus(tRequest);
+                }
+
+                e.Handled = true;
+            }
+        }
+
+        private void StudentPasswordField_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+
+                if (Keyboard.FocusedElement is UIElement keyboardFocus)
+                {
+                    keyboardFocus.MoveFocus(tRequest);
+                }
+
+                e.Handled = true;
+            } 
+        }
     }
 }

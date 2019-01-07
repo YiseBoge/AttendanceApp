@@ -43,7 +43,9 @@
         </Grid.RowDefinitions>
 
 
-        <Grid x:Name="GridMain" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFFFFF"/>
+        <Grid x:Name="GridMain" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFFFFF">
+            
+        </Grid>
         <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Height="60" VerticalAlignment="Top" Background="#03A9F4">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>
@@ -60,7 +62,7 @@
                             </StackPanel>
                         </Button>
                         <Separator/>
-                        <Button x:Name="LogoutBtn" Click="LogoutBtn_OnClick">
+                        <Button x:Name="LogoutBtn" Click="LogoutBtn_OnClick" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=LogoutConfirmPopup}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Logout" Margin="5,0,10,0" VerticalAlignment="Center" />
                                 <TextBlock Text="Logout" VerticalAlignment="Center"/>
@@ -118,50 +120,44 @@
             </StackPanel>
         </Grid>
 
-        <!-- <materialDesign:DialogHost Identifier="ConfirmPasswordDialog" Grid.Row="1" Grid.Column="1" CloseOnClickAway="True"> -->
-        <!--     <materialDesign:DialogHost.DialogContent> -->
-        <!--         <Grid Margin="20" MinWidth="200" MinHeight="200" > -->
-        <!--             <Grid.ColumnDefinitions> -->
-        <!--                 <ColumnDefinition Width="100*"/> -->
-        <!--             </Grid.ColumnDefinitions> -->
-        <!--             <Grid.RowDefinitions> -->
-        <!--                 <RowDefinition Height="30*"/> -->
-        <!--                 <RowDefinition Height="40*"/> -->
-        <!--                 <RowDefinition Height="30*"/> -->
-        <!--             </Grid.RowDefinitions> -->
-        <!--             <TextBlock Grid.Column="0" Grid.Row="0" Text="Confirm your password to continue to Attendance" /> -->
-        <!--             <PasswordBox Grid.Column="0" Grid.Row="1" x:Name="PasswordField" Margin="0,10" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontFamily="Champagne &amp; Limousines" FontSize="16"/> -->
-        <!--             <Button Grid.Column="0" Grid.Row="2" Content="Confirm"/> -->
-        <!--         </Grid> -->
-        <!--     </materialDesign:DialogHost.DialogContent> -->
-        <!-- -->
-        <!--     <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Show Dialog" -->
-        <!--             HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,0"/> -->
-        <!-- </materialDesign:DialogHost> -->
 
 
+        <materialDesign:DialogHost x:Name="CurrentCourseNotSetPopup" CloseOnClickAway="False" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Margin="25" MinHeight="150">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
 
-        <!-- <materialDesign:DialogHost Grid.Row="1" Grid.Column="1" CloseOnClickAway="True"> -->
-        <!--     <materialDesign:DialogHost.DialogContent> -->
-        <!--         <Grid Margin="20" MinWidth="200" MinHeight="200" > -->
-        <!--             <Grid.ColumnDefinitions> -->
-        <!--                 <ColumnDefinition Width="50*"/> -->
-        <!--                 <ColumnDefinition Width="50*"/> -->
-        <!--             </Grid.ColumnDefinitions> -->
-        <!--             <Grid.RowDefinitions> -->
-        <!--                 <RowDefinition Height="30*"/> -->
-        <!--                 <RowDefinition Height="40*"/> -->
-        <!--                 <RowDefinition Height="30*"/> -->
-        <!--             </Grid.RowDefinitions> -->
-        <!--             <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="Are You sure you wish you exit? (Logging out)" /> -->
-        <!--             <Button Grid.Column="0" Grid.Row="2" Margin="15" Content="No"/> -->
-        <!--             <Button Grid.Column="1" Grid.Row="2" Margin="15" Content="Yes"/> -->
-        <!--         </Grid> -->
-        <!--     </materialDesign:DialogHost.DialogContent> -->
-        <!-- -->
-        <!--     <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="Show Dialog" -->
-        <!--             HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,150,0,0"/> -->
-        <!-- </materialDesign:DialogHost> -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Sorry, the current Course needs to be set first." FontSize="15" VerticalAlignment="Center"/>
+                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=ConfirmPasswordPopup}"
+                            Grid.Row="1" Content="Ok" Width="75"/>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
+        <materialDesign:DialogHost x:Name="LogoutConfirmPopup" CloseOnClickAway="False" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Margin="25" MinHeight="120">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Logging Out" FontSize="18" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Are you sure you wish to Logout?" FontSize="15" VerticalAlignment="Center"/>
+                    <Button Grid.Column="0" Grid.Row="2" Content="No" Width="75" Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandTarget="{Binding ElementName=LogoutConfirmPopup}"/>
+                    <Button x:Name="LogoutYesBtn" Grid.Column="1" Grid.Row="2" Content="Yes" Width="75" Click="LogoutYesBtn_OnClick"/>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
     </Grid>
 
 

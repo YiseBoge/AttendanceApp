@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AttendanceApp"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              HorizontalAlignment="Stretch" 
              VerticalAlignment="Stretch">
@@ -14,8 +15,8 @@
             <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
 
@@ -26,7 +27,32 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="SaveAttendance" Grid.Row="1" Grid.Column="1" Width="100" Content="Save" FontFamily="Champagne &amp; Limousines" FontSize="16" Click="SaveAttendance_Click"/>
+        <TextBlock x:Name="MessageBlock" Margin="20" FontSize="15" Foreground="#9E9E9E" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center"/>
+        <Button x:Name="SaveAttendance" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" CommandTarget="{Binding ElementName=ConfirmPasswordPopup}"
+                Grid.Row="1" Grid.Column="1" Width="100" Content="Save" FontFamily="Champagne &amp; Limousines" FontSize="16" Click="SaveAttendance_Click"/>
 
+
+        <materialDesign:DialogHost x:Name="ConfirmPasswordPopup" CloseOnClickAway="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid Margin="25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock x:Name="ConfirmPasswordText" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Text="Confirm your Password to Save" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold"/>
+                    <TextBlock x:Name="ConfirmPasswordDetail" TextWrapping="Wrap" Margin="0, 10" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Text="Once Saved, the Students will not be displayed on this Page." FontSize="15"/>
+                    <PasswordBox x:Name="ConfirmPasswordField" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10" materialDesign:HintAssist.Hint="Password" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontFamily="Champagne &amp; Limousines" FontSize="16"/>
+                    <Button x:Name="PasswordConfirmBtn" Grid.Row="3" Grid.Column="1" Content="Confirm" Width="100" Click="PasswordConfirmBtn_OnClick"/>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
 </UserControl>

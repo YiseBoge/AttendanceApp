@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Media;
 using AttendanceApp.DataManagement;
 using AttendanceApp.Entities;
 
@@ -18,6 +19,12 @@ namespace AttendanceApp
         {
             InitializeComponent();
             this.AttendingStudent = attendingStudents;
+        }
+
+        private void SetMessageText(Color color, string message)
+        {
+            MessageBlock.Foreground = new SolidColorBrush(color);
+            MessageBlock.Text = message;
         }
     }
 }

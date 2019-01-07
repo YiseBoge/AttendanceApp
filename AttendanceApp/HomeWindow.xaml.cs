@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Media;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -50,25 +51,30 @@ namespace AttendanceApp
 
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
+            if (CurrentClassCourse == null)
             {
-                case "ItemCheckIn":
-                    if (CurrentClassCourse == null)
-                    {
-                        MessageBox.Show("Please Select a Course for the Current Session.", "No Class Selected.", MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadUserControl("Configure");
-                        break;
-                    }
-                    LoadUserControl("CheckIn");
-                    break;
-                case "ItemCurrentAttendance":
-                    LoadUserControl("CurrentAttendance");
-                    break;
-                case "ItemAttendanceList":
-                    LoadUserControl("AttendanceList");
-                    break;
+                CurrentCourseNotSetPopup.IsOpen = true;
+                LoadUserControl("Configure");
+                MenuList.SelectedItem = null;
+                return;
             }
+
+            if ((ListViewItem)((ListView)sender).SelectedItem != null)
+            {
+                switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
+                {
+                    case "ItemCheckIn":
+                        LoadUserControl("CheckIn");
+                        break;
+                    case "ItemCurrentAttendance":
+                        LoadUserControl("CurrentAttendance");
+                        break;
+                    case "ItemAttendanceList":
+                        LoadUserControl("AttendanceList");
+                        break;
+                }
+            }
+            
         }
 
         private void LoadUserControl(string which)
@@ -82,6 +88,7 @@ namespace AttendanceApp
                 }));
                 
             }
+            
             GridMain.Children.Clear();
             switch (which)
             {
@@ -123,21 +130,13 @@ namespace AttendanceApp
         private void ConfigureBtn_OnClick(object sender, RoutedEventArgs e)
         {
            LoadUserControl("Configure");
+           MenuList.SelectedItem = null;
         }
 
         private void LogoutBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            TheTeacher = null;
-            MessageBoxResult result = MessageBox.Show("Are You sure You wish to Logout?", "Logging Out", MessageBoxButton.YesNo,MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                new LoginWindow().Show();
-
-                Close();
-            }
+            SystemSounds.Beep.Play();
             
-
         }
 
 
@@ -145,7 +144,7 @@ namespace AttendanceApp
         {
             Dispatcher.BeginInvoke(new ThreadStart(delegate
             {
-                ((UserControlCheckIn)TheCheckInUserControl).LocalWebCam.Stop();
+                ((UserControlCheckIn)TheCheckInUserControl)?.LocalWebCam.Stop();
 
             }));
         }
@@ -154,10 +153,20 @@ namespace AttendanceApp
         {
             Dispatcher.BeginInvoke(new ThreadStart(delegate
             {
-                ((UserControlCheckIn)TheCheckInUserControl).LocalWebCam.Stop();
-
+                ((UserControlCheckIn) TheCheckInUserControl)?.LocalWebCam.Stop();
             }));
 
+        }
+
+        private void LogoutYesBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            TheTeacher = null;
+            AttendingStudents.Clear();
+            CurrentClassCourse = null;
+
+            new LoginWindow().Show();
+
+            Close();
         }
     }
 }

@@ -11,6 +11,10 @@
             <ColumnDefinition Width="50*"/>
             <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
 
 
         <DataGrid AlternatingRowBackground="#EEEEEE" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
@@ -24,5 +28,8 @@
                 <DataGridTextColumn Header="Day 5" Width="Auto"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <TextBlock x:Name="MessageBlock" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="20" FontSize="15" Foreground="#9E9E9E" HorizontalAlignment="Left" Text="Current Course: Not Assigned" VerticalAlignment="Center"/>
+
     </Grid>
 </UserControl>
